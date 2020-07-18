@@ -1,17 +1,27 @@
 <template>
   <div>
     <div v-if="initialized" class="card" >
-      <img :src="getPictureUrl(id)" class="card-img-top w-50 h-auto mx-auto pt-2" alt="Pokemon">
+      <img :src="getPokemonPicture(id)" class="card-img-top w-25 mx-auto pt-3" alt="Pokemon">
       <div class="card-body">
-        <h5 class="card-title">{{ pokemon.name }}</h5>
+        <h5 class="card-title">{{ pokemon.name.capitalize() }}</h5>
         <p class="card-text text-left">
-          <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
+          <ul class="list-unstyled">
+            <li>
+              <span class="font-weight-bold">Height:</span> 
+              {{ pokemon.height * 10 }}cm
+            </li>
+            <li class="">
+              <span class="font-weight-bold">Weight:</span> 
+              {{ pokemon.weight / 10 }}kg
+            </li>
+            <li>
+              <span class="font-weight-bold">Types:</span> 
+              <template v-for="(type, i) in pokemon.types">
+                <span :key="i" class="badge badge-light mx-1">{{ type.type.name }}</span>
+              </template>
+            </li>
           </ul>
         </p>
-        <a href="#" class="btn btn-sm btn-primary">Ayy boi</a>
       </div>
     </div>
   </div>
@@ -30,23 +40,17 @@ export default {
     }
   },
   async beforeMount() {
-    this.pokemon = await this.getPokemonDetails(this.id);
+    this.pokemon = await this.getPokemonById(this.id);
     this.initialized = true;
   },
   methods: {
-    getPictureUrl(id) {
+    getPokemonPicture(id) {
       return `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
     },
-    async getPokemonDetails(id) {
+    async getPokemonById(id) {
       let apiEndpoint = `https://pokeapi.co/api/v2/pokemon/${id}`;
       let response = await fetch(apiEndpoint);
-      let pokemonData = await response.json();
-
-      if (pokemonData.name != null) {
-        pokemonData.name = pokemonData.name.capitalize();
-      }
-
-      return pokemonData;
+      return await response.json();
     }
   },
 }

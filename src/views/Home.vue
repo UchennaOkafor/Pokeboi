@@ -1,14 +1,13 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <template v-for="i in 15">
-        <div class="col-3 px-3 py-3" :key="i">
+      <template v-for="i in 50">
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2 px-3 py-3" :key="i">
           <PokeCard :id="i"/>
         </div>
       </template>
     </div>
   </div>
-    
 </template>
 
 <script>
