@@ -5,6 +5,7 @@ import router from './router'
 import jQuery from 'jquery'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './global.js';
 
 global.jQuery = jQuery
 global .$ = jQuery
