@@ -3,28 +3,25 @@ const KEYS = {
   FAVOURITES: "favourite_pokemons"
 }
 
-export let favouritePokemon = id => {
+export let initializePokedex = async () => {
+  let result = await fetch("");
+  let pokemons = await result.json();
+  localStorage.getItem(KEYS.POKEMONS, JSON.stringify(pokemons));
+}
+
+export let isPokedexInitialized = () => localStorage.getItem(KEYS.POKEMONS) != null;
+
+export let toggleFavouritePokemon = id => {
   let result = getFavoritedPokemons();
   if (! result.includes(id)) {
     saveFavoritedPokemons(result.concat(id));
-  }
-}
-
-export let unfavouritePokemon = id => {
-  let result = getFavoritedPokemons();
-  if (result.includes(id)) {
+  } else {
     saveFavoritedPokemons(result.filter(item => item !== id));
   }
 }
 
-export let isPokemonFavourited = id => {
-  return getFavoritedPokemons().includes(id);
-}
+export let isPokemonFavourited = id => getFavoritedPokemons().includes(id);
 
-export let getFavoritedPokemons = () => {
-  return JSON.parse(localStorage.getItem(KEYS.FAVOURITES)) || [];
-}
+export let getFavoritedPokemons = () => JSON.parse(localStorage.getItem(KEYS.FAVOURITES)) || [];
 
-export let saveFavoritedPokemons = pokemons => {
-  localStorage.setItem(KEYS.FAVOURITES, JSON.stringify(pokemons));
-}
+export let saveFavoritedPokemons = pokemons => localStorage.setItem(KEYS.FAVOURITES, JSON.stringify(pokemons));

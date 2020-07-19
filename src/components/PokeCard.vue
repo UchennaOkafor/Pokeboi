@@ -1,6 +1,14 @@
 <template>
   <div>
-    <div v-if="initialized" class="card" @click="this.favouritePokemon">
+    <div v-if="initialized" class="card">
+      <div class="card-header py-0">
+        <div class="clearfix">
+          <button class="btn btn-sm btn-white float-right" @click="this.toggleFavourite">
+            <template v-if="isFavourited">💖</template>
+            <template v-else>🤍</template>
+        </button>
+        </div>
+      </div>
       <img :src="getPokemonPicture()" class="card-img-top w-25 mx-auto pt-3" alt="Pokemon">
       <div class="card-body">
         <h6 class="card-title">{{ pokemon.name.capitalize() }}</h6>
@@ -56,8 +64,9 @@ export default {
       let response = await fetch(apiEndpoint);
       return await response.json();
     },
-    favouritePokemon() {
-      util.favouritePokemon(this.id);
+    toggleFavourite() {
+      util.toggleFavouritePokemon(this.id);
+      this.isFavourited = util.isPokemonFavourited(this.id);
     }
   },
 }
