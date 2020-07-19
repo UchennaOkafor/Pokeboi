@@ -3,12 +3,6 @@ const KEYS = {
   FAVOURITES: "favourite_pokemons"
 }
 
-export let initializePokedex = async () => {
-  let result = await fetch("");
-  let pokemons = await result.json();
-  localStorage.getItem(KEYS.POKEMONS, JSON.stringify(pokemons));
-}
-
 export let isPokedexInitialized = () => localStorage.getItem(KEYS.POKEMONS) != null;
 
 export let toggleFavouritePokemon = id => {
