@@ -11,11 +11,14 @@
 </template>
 
 <style>
+body {
+  background-color: #f9fbfd !important;
+}
+
 #app {
   font-family: "Cerebri Sans",sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f9fbfd;
 }
 
 #nav {

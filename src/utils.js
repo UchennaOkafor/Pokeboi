@@ -3,8 +3,6 @@ const KEYS = {
   FAVOURITES: "favourite_pokemons"
 }
 
-export let isPokedexInitialized = () => localStorage.getItem(KEYS.POKEMONS) != null;
-
 export let toggleFavouritePokemon = id => {
   let result = getFavoritedPokemons();
   if (! result.includes(id)) {

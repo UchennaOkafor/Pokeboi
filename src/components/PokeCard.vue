@@ -2,32 +2,19 @@
   <div>
     <div v-if="initialized" class="card">
       <div class="clearfix">
-        <button class="btn btn-sm btn-white float-right p-0 mr-2 mt-2" @click="this.toggleFavourite">
+        <button class="btn btn-sm btn-white float-right p-0 mr-3 my-2" @click="this.toggleFavourite">
           <template v-if="isFavourited">💖</template>
           <template v-else>🤍</template>
         </button>
       </div>
-      <img :src="pokemonUrl" class="card-img-top w-25 mx-auto pt-3" alt="Pokemon">
+      <img :src="pokemonUrl" class="card-img-top w-50 mx-auto pt-3" alt="Pokemon">
       <div class="card-body">
-        <h6 class="card-title text-center">{{ pokemon.name.capitalize() }}</h6>
-        <p class="card-text text-left">
-          <ul class="list-unstyled">
-            <li>
-              <span class="h6">Height </span> 
-              <span class="text-muted">{{ pokemon.height * 10 }}cm</span>  
-            </li>
-            <li>
-              <span class="h6">Weight </span> 
-              <span class="text-muted">{{ pokemon.weight / 10 }}kg</span>  
-            </li>
-            <li>
-              <span class="h6">Types:</span> 
-              <template v-for="(type, i) in pokemon.types">
-                <span :key="i" class="badge badge-light mx-1">{{ type.type.name.capitalize() }}</span>
-              </template>
-            </li>
-          </ul>
-        </p>
+        <h5 class="card-title text-center">{{ pokemon.name.capitalize() }}</h5>
+        <div class="row justify-content-center">
+          <template v-for="(type, i) in pokemon.types">
+            <span :key="i" class="badge badge-light mx-1">{{ type.type.name.capitalize() }}</span>
+          </template>
+        </div>
       </div>
     </div>
   </div>
