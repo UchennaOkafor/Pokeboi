@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div v-if="initialized" class="card" >
-      <img :src="getPokemonPicture(id)" class="card-img-top w-25 mx-auto pt-3" alt="Pokemon">
+    <div v-if="initialized" class="card" @click="this.favouritePokemon">
+      <img :src="getPokemonPicture()" class="card-img-top w-25 mx-auto pt-3" alt="Pokemon">
       <div class="card-body">
-        <h5 class="card-title">{{ pokemon.name.capitalize() }}</h5>
+        <h6 class="card-title">{{ pokemon.name.capitalize() }}</h6>
         <p class="card-text text-left">
           <ul class="list-unstyled">
-            <li>
+            <li class="h6">
               <span class="font-weight-bold">Height:</span> 
               {{ pokemon.height * 10 }}cm
             </li>
-            <li class="">
+            <li class="h6">
               <span class="font-weight-bold">Weight:</span> 
               {{ pokemon.weight / 10 }}kg
             </li>
-            <li>
+            <li class="h6">
               <span class="font-weight-bold">Types:</span> 
               <template v-for="(type, i) in pokemon.types">
                 <span :key="i" class="badge badge-light mx-1">{{ type.type.name }}</span>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import * as util from "../utils.js";
+
 export default {
   name: 'PokeCard',
   props: {
@@ -36,21 +38,26 @@ export default {
   data() {
     return {
       initialized: false,
-      pokemon: null
+      pokemon: null,
+      isFavourited: false
     }
   },
   async beforeMount() {
-    this.pokemon = await this.getPokemonById(this.id);
+    this.pokemon = await this.getPokemonById();
+    this.isFavourited = util.isPokemonFavourited(this.id);
     this.initialized = true;
   },
   methods: {
-    getPokemonPicture(id) {
-      return `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
+    getPokemonPicture() {
+      return `https://pokeres.bastionbot.org/images/pokemon/${this.id}.png`;
     },
-    async getPokemonById(id) {
-      let apiEndpoint = `https://pokeapi.co/api/v2/pokemon/${id}`;
+    async getPokemonById() {
+      let apiEndpoint = `https://pokeapi.co/api/v2/pokemon/${this.id}`;
       let response = await fetch(apiEndpoint);
       return await response.json();
+    },
+    favouritePokemon() {
+      util.favouritePokemon(this.id);
     }
   },
 }
