@@ -12,7 +12,7 @@
         <h5 class="card-title text-center">{{ pokemon.name.capitalize() }}</h5>
         <div class="row justify-content-center">
           <template v-for="(type, i) in pokemon.types">
-            <span :key="i" class="badge badge-light mx-1">{{ type.type.name.capitalize() }}</span>
+            <span :key="i" class="badge badge-light mx-1 text-muted">{{ type.type.name.capitalize() }}</span>
           </template>
         </div>
       </div>
@@ -26,13 +26,20 @@ import * as util from "../utils.js";
 export default {
   name: 'PokeCard',
   props: {
-    id: Number
+    id: Number,
+    name: String
   },
   data() {
     return {
       initialized: false,
       pokemon: null,
       isFavourited: false
+    }
+  },
+  created() {
+    if (this.id == null && this.url != null) {
+      let parts = this.url.split("/");
+      this.id = parseInt(parts[parts.length -1]);
     }
   },
   async beforeMount() {
@@ -62,9 +69,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .card {
-    background: #fff;
-    border-color: #edf2f9;
-    margin-bottom: 0.95rem !important;
-    box-shadow: 0 1px 3px rgba(171, 171, 171, 0.12), 0 1px 2px rgba(171, 171, 171, 0.24);
+  background: #fff;
+  border-color: #edf2f9;
+  margin-bottom: 0.95rem !important;
+  box-shadow: 0 1px 3px rgba(171, 171, 171, 0.12), 0 1px 2px rgba(171, 171, 171, 0.24);
 }
 </style>

@@ -2,7 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/favourites">Favourites</router-link> |
+      <router-link to="/compare">Compare</router-link>
     </div>
     <div class="container-fluid">
       <router-view/>
@@ -13,10 +14,7 @@
 <style>
 body {
   background-color: #f9fbfd !important;
-}
-
-#app {
-  font-family: "Cerebri Sans",sans-serif;
+  font-family: "Cerebri Sans",sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
