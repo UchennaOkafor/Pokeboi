@@ -25,7 +25,11 @@
         </template>
         <template v-else>
           <div class="col-12 px-3 py-3">
-              <p class="text-center">No Pokémon found with the name <span class="font-weight-bold">{{ this.query }}</span>, please refine your search</p>
+              <p class="text-center">
+                No Pokémon found with the name 
+                <span class="font-weight-bold">{{ this.query }}</span>
+                , please refine your search.
+              </p>
           </div>
         </template>
       </div>
