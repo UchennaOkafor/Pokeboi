@@ -32,6 +32,19 @@
               <h6 class="mb-0 text-secondary">{{ pokemon.height * 10 }} cm</h6>
             </div>
           </div>
+          <div class="form-group mt-4">
+            <h6>Base stats</h6>
+            <p>
+              <template v-for="(stat, i) in pokemon.stats">
+                <div :key="i">
+                  <span class="small text-muted">{{ stat.stat.name.capitalize() }}</span>
+                  <div class="progress" style="height: 11px;">
+                    <div class="progress-bar" role="progressbar" :style="`width: ${stat.base_stat}%`"></div>
+                  </div>
+                </div>
+              </template>
+            </p>
+          </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
