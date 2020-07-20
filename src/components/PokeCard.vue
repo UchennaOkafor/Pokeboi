@@ -7,7 +7,8 @@
           <template v-else>🤍</template>
         </button>
       </div>
-      <img :src="pokemonUrl" class="card-img-top w-50 mx-auto pt-3" alt="Pokemon">
+      <img :src="pictureUrl" :data-fallback-src="fallbackPictureSrc" 
+        @error="handleImageError" class="card-img-top w-50 mx-auto pt-3" alt="Pokemon"/>
       <div class="card-body">
         <h5 class="card-title text-center">{{ pokemon.name.capitalize() }}</h5>
         <div class="row justify-content-center">
@@ -27,40 +28,61 @@ export default {
   name: 'PokeCard',
   props: {
     id: Number,
-    name: String
+    url: String
   },
   data() {
     return {
+      uniqueId: Number,
       initialized: false,
       pokemon: null,
       isFavourited: false
     }
   },
   created() {
+    //This component can be initialized either by an Id or a Url
+
+    //Checks if a url has been set, if it has, it parses the Id
     if (this.id == null && this.url != null) {
       let parts = this.url.split("/");
-      this.id = parseInt(parts[parts.length -1]);
+      this.uniqueId = parseInt(parts[parts.length -2]);
+    }
+
+    //If the user has set an Id, then use it
+    if (this.id != null) {
+      this.uniqueId = this.id;
     }
   },
   async beforeMount() {
     this.pokemon = await this.getPokemonById();
-    this.isFavourited = util.isPokemonFavourited(this.id);
+    this.isFavourited = util.isPokemonFavourited(this.uniqueId);
     this.initialized = true;
   },
   methods: {
     async getPokemonById() {
-      let apiEndpoint = `https://pokeapi.co/api/v2/pokemon/${this.id}`;
+      let apiEndpoint = `https://pokeapi.co/api/v2/pokemon/${this.uniqueId}`;
       let response = await fetch(apiEndpoint);
       return await response.json();
     },
     toggleFavourite() {
-      util.toggleFavouritePokemon(this.id);
-      this.isFavourited = util.isPokemonFavourited(this.id);
+      util.toggleFavouritePokemon(this.uniqueId);
+      this.isFavourited = util.isPokemonFavourited(this.uniqueId);
+    },
+    handleImageError(e) {
+      let fallbackSrc = e.target.dataset.fallbackSrc;
+      if (e.target.src != fallbackSrc) {
+        e.target.src = fallbackSrc;
+      }
     }
   },
   computed: {
-    pokemonUrl() {
-      return `https://pokeres.bastionbot.org/images/pokemon/${this.id}.png`;
+    pictureUrl() {
+      //The Id of the pokeapi.co skips by 9194 after 807, rather than being sequential.my-auto
+      //This quick maths addresses their bug
+      let id = this.uniqueId > 807 ? this.uniqueId - 9194 : this.uniqueId;
+      return `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
+    },
+    fallbackPictureSrc() {
+      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.uniqueId}.png`;
     }
   }
 }

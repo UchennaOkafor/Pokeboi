@@ -2,18 +2,21 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-7 col-md-10">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Type to begin search...">
-        </div>
+        <form id="searchForm">
+          <div class="form-group">
+            <input type="text" name="q" class="form-control" 
+            placeholder="Search Pokémon by name..." :value="this.query">
+          </div>
+        </form>
       </div>
       <div class="col-5 col-md-2">
-        <a class="btn btn-block btn-primary text-white mb-2">Compare</a>
+        <button form="searchForm" type="submit" class="btn btn-block btn-primary text-white mb-2">Search</button>
       </div>
     </div>
     <div class="row">
-      <template v-for="i in 24">
+      <template v-for="(pokemon, i) in searchResults">
         <div class="col-6 col-md-4 col-lg-3 col-xl-2 px-3 py-3" :key="i">
-          <poke-card :id="i"></poke-card>
+          <poke-card :url="pokemon.url"></poke-card>
         </div>
       </template>
     </div>
@@ -52,23 +55,24 @@ export default {
   },
   data() {
     return {
+      query: String,
+      searchResults: [],
       pagination: {
-        itemPerPage: 25,
+        itemPerPage: 24,
         currentPage: 1,
-        totalPages: 0,
         hasMore: false
       }
     }
   },
+  created() {
+    this.pagination.currentPage = this.$route.query.page || 1;
+    this.query = this.$route.query.q || "";
+  },
   async beforeMount() {
-    console.log(this.$route.query.page);
     if (! util.isPokedexInitialized()) {
       await util.initializePokedex();
     }
-  },
-  mounted() {
-    // const count = 964;
-    // this.pagination.maxPages = parseInt(count / 25);
+    this.searchResults = util.searchPokedex(this.query, this.pagination.itemPerPage, this.pagination.currentPage);
   }
 }
 </script>

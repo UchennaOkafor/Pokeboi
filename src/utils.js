@@ -1,18 +1,29 @@
 const KEYS = {
-  POKEMONS: "pokemons",
+  POKEDEX: "pokedex",
   FAVOURITES: "favourite_pokemons"
-}
-
-let getJson = async url => await (await fetch(url)).json();
-
-export let isPokedexInitialized = () => {
-  return JSON.parse(localStorage.getItem(KEYS.POKEMONS));
 }
 
 export let initializePokedex = async () => {
   let count = (await getJson("https://pokeapi.co/api/v2/pokemon/")).count;
   let response = await getJson(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=${count}`);
-  localStorage.setItem(KEYS.POKEMONS, JSON.stringify(response.results));
+  localStorage.setItem(KEYS.POKEDEX, JSON.stringify(response.results));
+}
+
+export let isPokedexInitialized = () => {
+  return JSON.parse(localStorage.getItem(KEYS.POKEDEX));
+}
+
+export let searchPokedex = (query, pageSize, page) => {
+  let items = JSON.parse(localStorage.getItem(KEYS.POKEDEX));
+  const pageFrom = (page - 1) * pageSize;
+  const pageTo = page * pageSize;
+
+  let filteredResults = items.filter(e => e.name.includes(query));
+  return filteredResults.slice(pageFrom, pageTo);
+}
+
+export let getPokedexCount = () => {
+  return JSON.parse(localStorage.getItem(KEYS.POKEDEX)).length;
 }
 
 export let toggleFavouritePokemon = id => {
@@ -31,3 +42,5 @@ export let getFavoritedPokemons = () => JSON.parse(localStorage.getItem(KEYS.FAV
 export let saveFavoritedPokemons = pokemons => localStorage.setItem(KEYS.FAVOURITES, JSON.stringify(pokemons));
 
 export let clearFavoritedPokemons = () => saveFavoritedPokemons([]);
+
+let getJson = async url => await (await fetch(url)).json();
