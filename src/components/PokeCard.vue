@@ -7,14 +7,25 @@
           <template v-else>🤍</template>
         </button>
       </div>
-      <img :src="pictureUrl" :data-fallback-src="fallbackPictureSrc" 
-        @error="handleImageError" class="card-img-top w-50 mx-auto pt-3" alt="Pokemon"/>
+      <img :src="pictureUrl" :data-fallback-src="imageFallbackSrc" 
+        @error="handleImageError" class="card-img-top w-50 mx-auto pt-3" alt="Pokémon"/>
       <div class="card-body">
         <h5 class="card-title text-center">{{ pokemon.name.capitalize() }}</h5>
         <div class="row justify-content-center">
           <template v-for="(type, i) in pokemon.types">
             <span :key="i" class="badge badge-light mx-1 text-muted">{{ type.type.name.capitalize() }}</span>
           </template>
+        </div>
+      </div>
+    </div>
+    <div v-else class="card">
+      <img class="card-img-top w-25 mx-auto"/>
+      <div class="card-body">
+        <h5 class="card-title text-center"></h5>
+        <div class="row justify-content-center">
+          <div class="spinner-border text-secondary mb-3" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
         </div>
       </div>
     </div>
@@ -32,9 +43,10 @@ export default {
   },
   data() {
     return {
+      imageFallbackSrc: "https://drinkedin.net/components/com_easyblog/themes/wireframe/images/placeholder-image.png",
       uniqueId: Number,
       initialized: false,
-      pokemon: null,
+      pokemon: Object,
       isFavourited: false
     }
   },
@@ -66,6 +78,7 @@ export default {
     toggleFavourite() {
       util.toggleFavouritePokemon(this.uniqueId);
       this.isFavourited = util.isPokemonFavourited(this.uniqueId);
+      this.$emit("pokemon-favourited", this.uniqueId);
     },
     handleImageError(e) {
       let fallbackSrc = e.target.dataset.fallbackSrc;
@@ -76,13 +89,13 @@ export default {
   },
   computed: {
     pictureUrl() {
-      //The Id of the pokeapi.co skips by 9194 after 807, rather than being sequential.my-auto
-      //This quick maths addresses their bug
-      let id = this.uniqueId > 807 ? this.uniqueId - 9194 : this.uniqueId;
-      return `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
-    },
-    fallbackPictureSrc() {
-      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.uniqueId}.png`;
+      //The Id of the pokeapi.co skips by 9194 after 807, rather than being sequential
+      //This uses a fallback for the broken images
+      if (this.uniqueId <= 807) {
+        return `https://pokeres.bastionbot.org/images/pokemon/${this.uniqueId}.png`;
+      } else {
+        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.uniqueId}.png`;
+      }
     }
   }
 }

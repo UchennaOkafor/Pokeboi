@@ -14,12 +14,21 @@ export let isPokedexInitialized = () => {
 }
 
 export let searchPokedex = (query, pageSize, page) => {
-  let items = JSON.parse(localStorage.getItem(KEYS.POKEDEX));
+  const items = JSON.parse(localStorage.getItem(KEYS.POKEDEX));
   const pageFrom = (page - 1) * pageSize;
-  const pageTo = page * pageSize;
+  const pageTo = page * pageSize; 
 
-  let filteredResults = items.filter(e => e.name.includes(query));
-  return filteredResults.slice(pageFrom, pageTo);
+  const filteredResults = items.filter(e => e.name.includes(query));
+  const totalPages = Math.ceil(filteredResults.length / pageSize);
+
+  return {
+    pagination: {
+      totalPages,
+      itemsPerPage: parseInt(pageSize),
+      currentPage: parseInt(page),
+    },
+    results: filteredResults.slice(pageFrom, pageTo)
+  }
 }
 
 export let getPokedexCount = () => {
