@@ -33,29 +33,38 @@
             </div>
           </div>
           <div class="form-group mt-4">
-            <h6>Abilities</h6>
-            <p>
-              <template v-for="(ability, i) in pokemon.abilities">
-                <div :key="i">
-                  <span class="text-muted">{{ ability.ability.name.capitalize() }}</span>
-                </div>
-              </template>
-            </p>
+            <h6 class="text-secondary">Held Items</h6>
+            <template v-if="pokemon.held_items.length === 0">
+              <p class="h6 font-weight-light">This Pokemon doesn't hold any items</p>
+            </template>
+            <template v-else>
+              <template v-for="(item, i) in pokemon.held_items">
+              <img :key="i" alt="Held item" class="mx-2" :title="item.item.name.capitalize()"
+                :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${item.item.name}.png`"/>
+            </template>
+            </template>
           </div>
-          <div class="form-group mt-4">
-            <h6>Base stats</h6>
-            <p>
-              <template v-for="(stat, i) in pokemon.stats">
-                <div :key="i">
-                  <span class="small text-muted text-uppercase">{{ stat.stat.name.capitalize() }}</span>
-                  <span class="d-block">{{ stat.base_stat }}</span>
-                </div>
-              </template>
-            </p>
+          <div class="form-group mt-4 pt-2">
+            <h6 class="text-secondary">Base Stats</h6>
+              <table class="table table-borderless table-sm">
+                <thead class="thead-light">
+                  <tr>
+                    <th>HP</th>
+                    <th>Attack</th>
+                    <th>Defense</th>
+                    <th>Sp. Atk</th>
+                    <th>Sp. Def</th>
+                    <th>Speed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td v-for="(stat, i) in pokemon.stats" :key="i">{{ stat.base_stat }}</td>
+                  </tr>
+                </tbody>
+              </table>
           </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          
         </div>
       </div>
     </div>
@@ -69,32 +78,9 @@ import PokeImage from './PokeImage.vue'
 export default {
   name: 'PokeModal',
   props: {
+    modalId: String,
     pokemon: null,
   },
-  components: { PokeImage },
-  data() {
-    return {
-
-    }
-  },
-  created() {
-    
-  },
-  beforeMount() {
-  },
-  methods: {
-
-  },
-  computed: {
-    modalId() {
-      return `pokeModal-${this.pokemon.name}`;
-    }
-  }
+  components: { PokeImage }
 }
 </script>
-
-<style scoped>
-.modal-dialog {
-
-}
-</style>

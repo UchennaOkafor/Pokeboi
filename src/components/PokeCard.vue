@@ -10,7 +10,7 @@
       <poke-image :id="pokemon.id" classes="card-img-top w-50 mx-auto pt-3 cursor-pointer" @clicked="this.openModal"></poke-image>
       <div class="card-body">
         <h5 class="card-title cursor-pointer text-center">
-          <a data-toggle="modal" :data-target="`#pokeModal-${pokemon.name}`">{{ pokemon.name.capitalize() }}</a>
+          <a data-toggle="modal" :data-target="`#${modalId}`">{{ pokemon.name.capitalize() }}</a>
         </h5>
         <div class="row justify-content-center">
           <template v-for="(type, i) in pokemon.types">
@@ -18,7 +18,7 @@
           </template>
         </div>
       </div>
-      <poke-modal :pokemon="pokemon"></poke-modal>
+      <poke-modal :modalId="modalId" :pokemon="pokemon"></poke-modal>
     </div>
     <div v-else class="card">
       <img class="card-img-top w-25 mx-auto"/>
@@ -52,7 +52,8 @@ export default {
       uniqueId: Number,
       initialized: false,
       pokemon: Object,
-      isFavourited: false
+      isFavourited: false,
+      modalId: "",
     }
   },
   created() {
@@ -72,6 +73,7 @@ export default {
     this.pokemon = await this.getPokemonById();
     this.isFavourited = util.isPokemonFavourited(this.uniqueId);
     this.initialized = true;
+    this.modalId = `pokeModal-${this.pokemon.name}`;
   },
   methods: {
     async getPokemonById() {
@@ -85,7 +87,7 @@ export default {
       this.$emit("pokemon-favourited", this.uniqueId);
     },
     openModal() {
-      $(`#pokeModal-${this.pokemon.name}`).modal("show");
+      $(`#${this.modalId}`).modal("show");
     }
   }
 }

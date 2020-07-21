@@ -28,13 +28,7 @@ export default {
   },
   data() {
     return {
-      previousPageDisabled: true,
-      nextPageDisabled: true
     }
-  },
-  beforeMount() {
-    this.previousPageDisabled = this.data.currentPage === 1;
-    this.nextPageDisabled = this.data.totalPages === this.data.currentPage;
   },
   methods: {
     getLink(i) {
@@ -47,6 +41,14 @@ export default {
       }
 
       return `/?q=${this.query}&page=${i}`;
+    }
+  },
+  computed: {
+    previousPageDisabled() {
+      return this.data.currentPage === 1;
+    },
+    nextPageDisabled() {
+      return this.data.totalPages === this.data.currentPage
     }
   }
 }

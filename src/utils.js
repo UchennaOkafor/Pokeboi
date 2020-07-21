@@ -30,6 +30,28 @@ export let searchPokedex = (query, pageSize, page) => {
   }
 }
 
+export let calculateStats = (pokemon) => {
+  let stats = [];
+
+  pokemon.stats.forEach(stat => {
+    let max = 0;
+
+    if (stat.stat.name === "hp") {
+      max = (stat.base_stat * 2) + 204;
+    } else {
+      max = Math.round((stat.base_stat * 2 + 99) * 1.1);
+    }
+
+    stats.push({ 
+      name: stat.stat.name, 
+      base: stat.base_stat, 
+      max
+    });
+  });
+
+  return stats;
+}
+
 export let getPokedex = () => {
   return JSON.parse(localStorage.getItem(KEYS.POKEDEX));
 }

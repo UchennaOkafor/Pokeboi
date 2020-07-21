@@ -62,7 +62,6 @@ export default {
   data() {
     return {
       query: "",
-      page: 1,
       searchResults: [],
       pagination: {},
       initialized: false
@@ -75,20 +74,20 @@ export default {
 
     this.initialized = true;
     this.query = this.$route.query.q || "";
-    this.page = this.$route.query.page || 1;
-    this.search();
+    this.search(this.query, this.$route.query.page || 1);
   },
   methods: {
-    search() {
-      let response = util.searchPokedex(this.query, 24, this.page);
+    search(query, page) {
+      let response = util.searchPokedex(query, 24, page);
       this.searchResults = response.results;
       this.pagination = response.pagination;
     },
-    formSubmit() {
+    formSubmit(e) {
       e.preventDefault();
+
       this.query = this.$refs.query.value;
       window.history.replaceState(null, null, `?q=${this.query}&page=1`);
-      this.search();
+      this.search(this.query, 1);
     }
   }
 }
