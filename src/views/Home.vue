@@ -84,7 +84,7 @@ export default {
       this.searchResults = response.results;
       this.pagination = response.pagination;
     },
-    formSubmit(e) {
+    formSubmit() {
       e.preventDefault();
       this.query = this.$refs.query.value;
       window.history.replaceState(null, null, `?q=${this.query}&page=1`);

@@ -14,11 +14,10 @@ export let isPokedexInitialized = () => {
 }
 
 export let searchPokedex = (query, pageSize, page) => {
-  const items = JSON.parse(localStorage.getItem(KEYS.POKEDEX));
   const pageFrom = (page - 1) * pageSize;
   const pageTo = page * pageSize; 
 
-  const filteredResults = items.filter(e => e.name.includes(query));
+  const filteredResults = getPokedex().filter(e => e.name.includes(query));
   const totalPages = Math.ceil(filteredResults.length / pageSize);
 
   return {
@@ -31,8 +30,8 @@ export let searchPokedex = (query, pageSize, page) => {
   }
 }
 
-export let getPokedexCount = () => {
-  return JSON.parse(localStorage.getItem(KEYS.POKEDEX)).length;
+export let getPokedex = () => {
+  return JSON.parse(localStorage.getItem(KEYS.POKEDEX));
 }
 
 export let toggleFavouritePokemon = id => {

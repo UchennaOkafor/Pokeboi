@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Favourites from '../views/Favourites.vue'
+import Compare from '../views/Compare.vue'
 
 Vue.use(VueRouter)
 
@@ -19,7 +20,7 @@ Vue.use(VueRouter)
   {
     path: '/compare',
     name: 'Compare',
-    component: Favourites
+    component: Compare
   }
 ]
 

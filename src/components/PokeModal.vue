@@ -20,27 +20,35 @@
           </div>
           <div class="row no-gutters">
             <div class="col-4 pt-2 pb-0 text-center border-right">
-              <h6 class="text-uppercase text-dark">Base XP</h6>
+              <h6 class="text-dark">Base XP</h6>
               <h6 class="mb-0 text-secondary">{{ pokemon.base_experience }}</h6>
             </div>
             <div class="col-4 pt-2 pb-0 text-center">
-              <h6 class="text-uppercase text-dark">Weight</h6>
+              <h6 class="text-dark">Weight</h6>
               <h6 class="mb-0 text-secondary">{{ pokemon.weight / 10 }} kg</h6>
             </div>
             <div class="col-4 pt-2 pb-0 text-center border-left">
-              <h6 class="text-uppercase text-dark">Height</h6>
+              <h6 class="text-dark">Height</h6>
               <h6 class="mb-0 text-secondary">{{ pokemon.height * 10 }} cm</h6>
             </div>
+          </div>
+          <div class="form-group mt-4">
+            <h6>Abilities</h6>
+            <p>
+              <template v-for="(ability, i) in pokemon.abilities">
+                <div :key="i">
+                  <span class="text-muted">{{ ability.ability.name.capitalize() }}</span>
+                </div>
+              </template>
+            </p>
           </div>
           <div class="form-group mt-4">
             <h6>Base stats</h6>
             <p>
               <template v-for="(stat, i) in pokemon.stats">
                 <div :key="i">
-                  <span class="small text-muted">{{ stat.stat.name.capitalize() }}</span>
-                  <div class="progress" style="height: 11px;">
-                    <div class="progress-bar" role="progressbar" :style="`width: ${stat.base_stat}%`"></div>
-                  </div>
+                  <span class="small text-muted text-uppercase">{{ stat.stat.name.capitalize() }}</span>
+                  <span class="d-block">{{ stat.base_stat }}</span>
                 </div>
               </template>
             </p>
