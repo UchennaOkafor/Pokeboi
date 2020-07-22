@@ -1,24 +1,13 @@
-# pokeboi
+# Pokeboi
 
-## Project setup
-```
-npm install
-```
+A front-end web app that makes use of the https://pokeapi.co/ API.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Link
+Web app can be accessed here
+https://pokeboi.netlify.app/
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Built with
+* Modern ES6 
+* Vue.js
+* Bootstrap
