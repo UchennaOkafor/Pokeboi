@@ -16,3 +16,6 @@ https://pokeboi.netlify.app/
 * Modern ES6 
 * Vue.js
 * Bootstrap
+
+## Screenshot
+<img src="https://i.imgur.com/UajxWPn.png">
