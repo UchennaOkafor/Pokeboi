@@ -4,13 +4,13 @@
   <nav class="mb-5">
     <ul class="pagination">
       <li class="page-item" :class="{'disabled' : previousPageDisabled}">
-        <a class="page-link" :href="getLink(data.currentPage - 1)" aria-label="Previous">
+        <a class="page-link" :href="getLink(data.currentPage - 1)">
           <span aria-hidden="true">Prev</span>
         </a>
       </li>
 
       <li class="page-item" :class="{'disabled' : nextPageDisabled}">
-        <a class="page-link" :href="getLink(data.currentPage + 1)" aria-label="Next">
+        <a class="page-link" :href="getLink(data.currentPage + 1)">
           <span aria-hidden="true">Next</span>
         </a>
       </li>

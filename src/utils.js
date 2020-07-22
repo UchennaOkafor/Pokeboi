@@ -13,6 +13,12 @@ export let isPokedexInitialized = () => {
   return JSON.parse(localStorage.getItem(KEYS.POKEDEX));
 }
 
+export let getPokemonByNameOrId = async nameOrId =>{
+  let endpoint = `https://pokeapi.co/api/v2/pokemon/${nameOrId}`;
+  let response = await fetch(endpoint);
+  return await response.json();
+}
+
 export let searchPokedex = (query, pageSize, page) => {
   const pageFrom = (page - 1) * pageSize;
   const pageTo = page * pageSize; 

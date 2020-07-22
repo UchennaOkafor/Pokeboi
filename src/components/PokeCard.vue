@@ -69,17 +69,12 @@ export default {
     }
   },
   async beforeMount() {
-    this.pokemon = await this.getPokemonById();
+    this.pokemon = await util.getPokemonByNameOrId(this.uniqueId);
     this.isFavourited = util.isPokemonFavourited(this.uniqueId);
     this.initialized = true;
     this.modalId = `pokeModal-${this.pokemon.name}`;
   },
   methods: {
-    async getPokemonById() {
-      let apiEndpoint = `https://pokeapi.co/api/v2/pokemon/${this.uniqueId}`;
-      let response = await fetch(apiEndpoint);
-      return await response.json();
-    },
     toggleFavourite() {
       util.toggleFavouritePokemon(this.uniqueId);
       this.isFavourited = util.isPokemonFavourited(this.uniqueId);

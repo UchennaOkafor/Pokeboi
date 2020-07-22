@@ -1,6 +1,7 @@
 <template>
   <img :src="pictureUrl" :data-fallback-src="imageFallbackSrc" 
-        @error="handleImageError" @click="$emit('clicked')" :class="classes" alt="Pokémon"/>
+        :class="classes" :height="height" alt="Pokémon"
+        @error="handleImageError" @click="$emit('clicked')" />
 </template>
 
 <script>
@@ -9,6 +10,7 @@ export default {
   props: {
     id: Number,
     classes: String,
+    height: Number
   },
   data() {
     return {
