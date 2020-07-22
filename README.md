@@ -6,7 +6,7 @@ A front-end web app that makes use of the https://pokeapi.co/ API.
 Web app can be accessed here
 https://pokeboi.netlify.app/
 
-### Functionalities
+#### Functionalities
 * Added Search functionality (with Pagination)
 * Ability to favour a Pokemon
 * Ability to view and visualize a Pokemon's information
