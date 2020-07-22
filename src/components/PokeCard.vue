@@ -10,7 +10,7 @@
       <poke-image :id="pokemon.id" classes="card-img-top w-50 mx-auto pt-3 cursor-pointer" @clicked="this.openModal"></poke-image>
       <div class="card-body">
         <h5 class="card-title cursor-pointer text-center">
-          <a data-toggle="modal" :data-target="`#${modalId}`">{{ pokemon.name.capitalize() }}</a>
+          <a @clicked="this.openModal">{{ pokemon.name.capitalize() }}</a>
         </h5>
         <div class="row justify-content-center">
           <template v-for="(type, i) in pokemon.types">
@@ -18,7 +18,6 @@
           </template>
         </div>
       </div>
-      <poke-modal :modalId="modalId" :pokemon="pokemon"></poke-modal>
     </div>
     <div v-else class="card">
       <img class="card-img-top w-25 mx-auto"/>
@@ -31,6 +30,8 @@
         </div>
       </div>
     </div>
+
+    <poke-modal :modalId="modalId" :pokemon="pokemon"></poke-modal>
   </div>
 </template>
 
@@ -87,12 +88,16 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .card {
   background: #fff;
   border-color: #edf2f9;
   margin-bottom: 0.95rem !important;
   box-shadow: 0 1px 3px rgba(171, 171, 171, 0.12), 0 1px 2px rgba(171, 171, 171, 0.24);
+  transition: box-shadow .25s ease,transform .25s ease;
+}
+
+.card:hover, .card:focus {
+  transform: translate3d(0, -10px, 0);
 }
 </style>
