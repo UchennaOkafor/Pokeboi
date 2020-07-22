@@ -52,6 +52,11 @@ export let calculateStats = (pokemon) => {
   return stats;
 }
 
+export let getIdFromUrl = url => {
+  let parts = url.split("/");
+  return parseInt(parts[parts.length -2]);
+}
+
 export let getPokedex = () => {
   return JSON.parse(localStorage.getItem(KEYS.POKEDEX));
 }

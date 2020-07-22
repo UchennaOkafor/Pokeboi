@@ -60,8 +60,7 @@ export default {
     //This component can be initialized either by an Id or a Url
     //Checks if a url has been set, if it has, it parses the Id
     if (this.id == null && this.url != null) {
-      let parts = this.url.split("/");
-      this.uniqueId = parseInt(parts[parts.length -2]);
+      this.uniqueId = util.getIdFromUrl(this.url);
     }
 
     //If the user has set an Id, then use it

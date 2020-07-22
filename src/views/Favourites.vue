@@ -9,7 +9,7 @@
           <button class="btn btn-primary text-white" @click="clearFavourites">Clear favourites</button>
         </div>
       </div>
-      <div class="row">
+      <div class="row mt-2">
         <template v-if="favouritedPokemons.length > 0">
           <template v-for="id in favouritedPokemons">
             <div class="col-6 col-md-4 col-lg-3 col-xl-2 px-3 py-3" :key="id">
