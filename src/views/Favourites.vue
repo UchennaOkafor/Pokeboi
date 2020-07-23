@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import * as util from "../utils.js";
+import * as pokeUtil from "../poke-util.js";
 import PokeCard from '@/components/PokeCard.vue'
 
 export default {
@@ -46,11 +46,11 @@ export default {
   },
   methods: {
     loadFavourites() {
-      this.favouritedPokemons = util.getFavoritedPokemons();
+      this.favouritedPokemons = pokeUtil.getFavoritedPokemons();
     },
     clearFavourites() {
       this.favouritedPokemons = [];
-      util.clearFavoritedPokemons();
+      pokeUtil.clearFavoritedPokemons();
     }
   }
 }

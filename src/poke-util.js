@@ -13,17 +13,13 @@ export let isPokedexInitialized = () => {
   return JSON.parse(localStorage.getItem(KEYS.POKEDEX));
 }
 
-export let getPokemonByNameOrId = async nameOrId =>{
-  let endpoint = `https://pokeapi.co/api/v2/pokemon/${nameOrId}`;
-  let response = await fetch(endpoint);
-  return await response.json();
-}
+export let getPokemonByNameOrId = async nameOrId => await getJson(`https://pokeapi.co/api/v2/pokemon/${nameOrId}`);
 
 export let searchPokedex = (query, pageSize, page) => {
   const pageFrom = (page - 1) * pageSize;
   const pageTo = page * pageSize; 
 
-  const filteredResults = getPokedex().filter(e => e.name.includes(query));
+  const filteredResults = getPokedex().filter(e => e.name.includes(query.toLowerCase()));
   const totalPages = Math.ceil(filteredResults.length / pageSize);
 
   return {
@@ -34,28 +30,6 @@ export let searchPokedex = (query, pageSize, page) => {
     },
     results: filteredResults.slice(pageFrom, pageTo)
   }
-}
-
-export let calculateStats = (pokemon) => {
-  let stats = [];
-
-  pokemon.stats.forEach(stat => {
-    let max = 0;
-
-    if (stat.stat.name === "hp") {
-      max = (stat.base_stat * 2) + 204;
-    } else {
-      max = Math.round((stat.base_stat * 2 + 99) * 1.1);
-    }
-
-    stats.push({ 
-      name: stat.stat.name, 
-      base: stat.base_stat, 
-      max
-    });
-  });
-
-  return stats;
 }
 
 export let getIdFromUrl = url => {

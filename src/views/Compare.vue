@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import * as util from "../utils.js"
+import * as pokeUtil from "../poke-util.js"
 import PokeImage from '@/components/PokeImage.vue'
 
 export default {
@@ -99,7 +99,7 @@ export default {
     }
   },
   beforeMount() {
-    this.pokedex = util.getPokedex().sort((a, b) => a.name > b.name ? 1 : -1);
+    this.pokedex = pokeUtil.getPokedex().sort((a, b) => a.name > b.name ? 1 : -1);
   },
   methods: {
     async pokemonSelected() {
@@ -112,8 +112,8 @@ export default {
 
         this.loading = true;
         this.selectedPokemons = [
-          await util.getPokemonByNameOrId(selectedValue1),
-          await util.getPokemonByNameOrId(selectedValue2),
+          await pokeUtil.getPokemonByNameOrId(selectedValue1),
+          await pokeUtil.getPokemonByNameOrId(selectedValue2),
         ];
         this.loading = false;
       }

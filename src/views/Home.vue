@@ -51,7 +51,7 @@
 import PokeCard from '@/components/PokeCard.vue'
 import Pagination from '@/components/Pagination.vue'
 
-import * as util from '../utils.js';
+import * as pokeUtil from '../poke-util.js';
 
 export default {
   name: 'Home',
@@ -67,8 +67,8 @@ export default {
     }
   },
   async beforeMount() {
-    if (! util.isPokedexInitialized()) {
-      await util.initializePokedex();
+    if (! pokeUtil.isPokedexInitialized()) {
+      await pokeUtil.initializePokedex();
     }
 
     this.initialized = true;
@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     search(query, page) {
-      let response = util.searchPokedex(query, 24, page);
+      let response = pokeUtil.searchPokedex(query, 24, page);
       this.searchResults = response.results;
       this.pagination = response.pagination;
     },

@@ -37,7 +37,7 @@
 
 <script>
 import * as $ from "jquery";
-import * as util from "../utils.js";
+import * as pokeUtil from "../poke-util.js";
 import PokeImage from './PokeImage.vue'
 import PokeModal from './PokeModal.vue'
 
@@ -61,7 +61,7 @@ export default {
     //This component can be initialized either by an Id or a Url
     //Checks if a url has been set, if it has, it parses the Id
     if (this.id == null && this.url != null) {
-      this.uniqueId = util.getIdFromUrl(this.url);
+      this.uniqueId = pokeUtil.getIdFromUrl(this.url);
     }
 
     //If the user has set an Id, then use it
@@ -70,15 +70,15 @@ export default {
     }
   },
   async beforeMount() {
-    this.pokemon = await util.getPokemonByNameOrId(this.uniqueId);
-    this.isFavourited = util.isPokemonFavourited(this.uniqueId);
-    this.initialized = true;
+    this.pokemon = await pokeUtil.getPokemonByNameOrId(this.uniqueId);
+    this.isFavourited = pokeUtil.isPokemonFavourited(this.uniqueId);
     this.modalId = `pokeModal-${this.pokemon.name}`;
+    this.initialized = true;
   },
   methods: {
     toggleFavourite() {
-      util.toggleFavouritePokemon(this.uniqueId);
-      this.isFavourited = util.isPokemonFavourited(this.uniqueId);
+      pokeUtil.toggleFavouritePokemon(this.uniqueId);
+      this.isFavourited = pokeUtil.isPokemonFavourited(this.uniqueId);
       this.$emit("pokemon-favourited", this.uniqueId);
     },
     openModal() {

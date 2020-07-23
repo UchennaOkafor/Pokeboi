@@ -34,7 +34,7 @@
           </div>
           <div class="form-group mt-4">
             <h6 class="text-secondary">Held Items</h6>
-            <template v-if="pokemon.held_items.length === 0">
+            <template v-if="pokemon.held_items == null || pokemon.held_items.length === 0">
               <p class="h6 font-weight-light">This Pokemon doesn't hold any items</p>
             </template>
             <template v-else>
