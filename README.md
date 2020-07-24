@@ -8,7 +8,7 @@ https://pokeboi.netlify.app/
 
 #### Functionalities
 * Added Search functionality (with Pagination)
-* Ability to favour a Pokemon
+* Ability to favourite a Pokemon
 * Ability to view and visualize a Pokemon's information
 * Ability to compare Pokemon statistics
 
